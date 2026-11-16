@@ -6,6 +6,7 @@ import {
   Sparkles, 
   Sliders, 
   ChevronRight, 
+  ChevronLeft,
   Camera, 
   Tv, 
   Music, 
@@ -31,10 +32,42 @@ export default function HomePage() {
 
   const featuredWorks = portfolioData.slice(0, 6);
 
-  // Divide clients into 3 distinct, balanced rows for desktop presentation
-  const clientRow1 = clientsData.slice(0, 10);
-  const clientRow2 = clientsData.slice(10, 20);
-  const clientRow3 = clientsData.slice(20, 29);
+  // Mobile Featured Productions Slider State & Swipe Handlers
+  const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
+  const [projTouchStart, setProjTouchStart] = useState(0);
+  const [projTouchEnd, setProjTouchEnd] = useState(0);
+
+  const prevMobileProject = () => {
+    setMobileProjectIndex((prev) => (prev > 0 ? prev - 1 : featuredWorks.length - 1));
+  };
+
+  const nextMobileProject = () => {
+    setMobileProjectIndex((prev) => (prev < featuredWorks.length - 1 ? prev + 1 : 0));
+  };
+
+  const handleProjTouchStart = (e) => {
+    setProjTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleProjTouchMove = (e) => {
+    setProjTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleProjTouchEnd = () => {
+    if (!projTouchStart || !projTouchEnd) return;
+    const distance = projTouchStart - projTouchEnd;
+    if (distance > 45) {
+      nextMobileProject();
+    } else if (distance < -45) {
+      prevMobileProject();
+    }
+    setProjTouchStart(0);
+    setProjTouchEnd(0);
+  };
+
+  // Divide clients into two balanced rows for opposite-direction marquee
+  const clientRow1 = clientsData.slice(0, 16);
+  const clientRow2 = clientsData.slice(16);
 
   return (
     <div className="relative bg-black min-h-screen text-gray-200">
@@ -119,11 +152,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Featured Productions Showcase (Cinematic Poster Grid) */}
-      <section className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-[#050505]">
+      {/* 3. Featured Productions Showcase: Mobile Slider & Desktop Grid */}
+      <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-[#050505]">
         <div className="max-w-7xl mx-auto">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-6">
             <div>
               <span className="text-xs uppercase tracking-super-wide text-gold font-semibold block mb-2">
                 Portfolio Showcase
@@ -142,8 +175,117 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Posters Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* MOBILE VIEW: Interactive Slider / Carousel (md:hidden) */}
+          <div className="md:hidden">
+            {/* Mobile Controls & Slide Indicator */}
+            <div className="flex items-center justify-between mb-4 px-1">
+              <div className="flex items-center gap-2">
+                <span className="font-cinzel text-[11px] uppercase tracking-widest text-gold font-bold bg-gold/10 px-3 py-0.5 rounded-full border border-gold/30">
+                  Project {mobileProjectIndex + 1} / {featuredWorks.length}
+                </span>
+                <span className="text-[10px] text-gray-400 font-sans">
+                  Swipe or tap arrows
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={prevMobileProject}
+                  className="p-2 rounded-full bg-[#121212] border border-white/15 text-white hover:text-gold hover:border-gold active:scale-95 transition-all shadow-md"
+                  aria-label="Previous Featured Project"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={nextMobileProject}
+                  className="p-2 rounded-full bg-[#121212] border border-white/15 text-white hover:text-gold hover:border-gold active:scale-95 transition-all shadow-md"
+                  aria-label="Next Featured Project"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile Sliding Track with Touch Events */}
+            <div 
+              className="overflow-hidden rounded-xl border border-white/10 bg-[#070707] p-2 shadow-2xl relative"
+              onTouchStart={handleProjTouchStart}
+              onTouchMove={handleProjTouchMove}
+              onTouchEnd={handleProjTouchEnd}
+            >
+              <div 
+                className="flex transition-transform duration-500 ease-out"
+                style={{ transform: `translateX(-${mobileProjectIndex * 100}%)` }}
+              >
+                {featuredWorks.map((work) => (
+                  <div key={work.id} className="w-full flex-shrink-0 px-1">
+                    <div 
+                      onClick={() => setSelectedProject(work)}
+                      className="group relative bg-[#0b0b0b] rounded-lg border border-white/15 hover:border-gold/60 overflow-hidden cursor-pointer shadow-xl"
+                    >
+                      {/* Poster Frame */}
+                      <div className="relative aspect-[3/4] bg-black overflow-hidden flex items-center justify-center">
+                        <img 
+                          src={work.poster} 
+                          alt={work.title} 
+                          className="w-full h-full object-contain filter drop-shadow-md"
+                        />
+                        
+                        {/* Overlay with Details & Tap Callout */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent flex flex-col justify-end p-5">
+                          <span className="inline-block px-2.5 py-0.5 text-[9px] uppercase tracking-widest text-black bg-gold font-bold rounded-sm mb-1.5 self-start">
+                            {work.category}
+                          </span>
+                          <h3 className="font-cinzel text-lg text-white font-bold mb-1">
+                            {work.title}
+                          </h3>
+                          <p className="text-xs text-gray-300 font-sans line-clamp-2 mb-2">
+                            {work.logline}
+                          </p>
+                          <div className="flex items-center gap-1.5 text-xs text-gold font-medium">
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>Tap to View Full Credits & Details</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card Footer */}
+                      <div className="p-4 flex items-center justify-between border-t border-white/5 bg-[#080808]">
+                        <div>
+                          <span className="text-[10px] uppercase tracking-widest text-gold font-medium block">
+                            {work.category}
+                          </span>
+                          <h4 className="font-cinzel text-sm text-white font-bold">
+                            {work.title}
+                          </h4>
+                        </div>
+                        <span className="text-xs text-gray-400 font-sans">
+                          {work.year}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Pagination Dots */}
+            <div className="flex items-center justify-center gap-2 mt-4">
+              {featuredWorks.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setMobileProjectIndex(idx)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    mobileProjectIndex === idx ? 'w-6 bg-gold' : 'w-1.5 bg-white/20'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* DESKTOP VIEW: Cinematic 3-Column Poster Grid (hidden md:grid) */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredWorks.map((work) => (
               <div 
                 key={work.id}
@@ -388,56 +530,83 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Verified Clientele Showcase - 3 ROWS & LARGER LOGOS ON DESKTOP */}
-      <section className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-[#050505]">
-        <div className="max-w-7xl mx-auto">
-          
+      {/* 7. Verified Clientele Showcase - 2 OPPOSITE DIRECTION MARQUEE ROWS WITH HOVER PAUSE */}
+      <section className="py-24 md:py-32 border-b border-white/5 bg-[#050505] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
           <SectionHeading
             subtitle="Trusted Partnerships"
             title="Our Clientele"
             description="Collaborating with government administrations, public sector undertakings, police authorities, municipal corporations, and enterprise leaders."
           />
+        </div>
 
-          {/* 3 Distinct Rows with Larger Logos on Desktop */}
-          <div className="space-y-5 md:space-y-6">
-            {[clientRow1, clientRow2, clientRow3].map((row, rIdx) => (
-              <div 
-                key={rIdx}
-                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 xl:grid-cols-10 gap-3 sm:gap-4 items-stretch"
-              >
-                {row.map((client, idx) => (
-                  <div 
-                    key={idx}
-                    className="p-3 sm:p-4 md:p-5 rounded-xl bg-[#0e0e0e] border border-white/10 hover:border-gold/60 flex flex-col items-center justify-center min-h-[125px] sm:min-h-[145px] md:min-h-[160px] lg:min-h-[170px] transition-all duration-300 group shadow-lg hover:shadow-gold/10 hover:-translate-y-1"
-                    title={client.name}
-                  >
-                    <div className="w-full h-14 sm:h-16 md:h-20 lg:h-22 flex items-center justify-center p-2">
-                      <img 
-                        src={client.logo} 
-                        alt={client.name} 
-                        className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                    <span className="text-[10px] md:text-[11px] text-gray-300 group-hover:text-gold text-center font-sans font-medium line-clamp-1 mt-2.5">
-                      {client.name}
-                    </span>
+        {/* Marquee Container with Subtle Edge Fades and Pause on Hover */}
+        <div className="relative w-full overflow-hidden marquee-container space-y-4 sm:space-y-6">
+          
+          {/* Left & Right Cinematic Vignette Gradients */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 md:w-48 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 md:w-48 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent z-10" />
+
+          {/* Row 1: Moving in Direction A (Left) */}
+          <div className="overflow-hidden py-1">
+            <div className="animate-marquee-left flex items-stretch">
+              {[...clientRow1, ...clientRow1].map((client, idx) => (
+                <div
+                  key={`r1-${idx}`}
+                  className="w-48 sm:w-56 md:w-64 flex-shrink-0 mx-2 sm:mx-3 p-4 sm:p-5 rounded-xl bg-[#0e0e0e] border border-white/10 hover:border-gold/60 flex flex-col items-center justify-center transition-all duration-300 group shadow-lg hover:shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:-translate-y-1 select-none"
+                  title={client.name}
+                >
+                  <div className="w-full h-16 sm:h-20 md:h-22 flex items-center justify-center p-2">
+                    <img
+                      src={client.logo}
+                      alt={client.name}
+                      className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
+                      loading="lazy"
+                    />
                   </div>
-                ))}
-              </div>
-            ))}
+                  <span className="text-[11px] sm:text-xs text-gray-300 group-hover:text-gold text-center font-sans font-medium line-clamp-1 mt-2 transition-colors">
+                    {client.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="mt-12 text-center">
-            <Link
-              to="/clients"
-              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold hover:text-white transition-colors"
-            >
-              <span>Explore All 31 Verified Client Partners</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+          {/* Row 2: Moving in Opposite Direction B (Right) */}
+          <div className="overflow-hidden py-1">
+            <div className="animate-marquee-right flex items-stretch">
+              {[...clientRow2, ...clientRow2].map((client, idx) => (
+                <div
+                  key={`r2-${idx}`}
+                  className="w-48 sm:w-56 md:w-64 flex-shrink-0 mx-2 sm:mx-3 p-4 sm:p-5 rounded-xl bg-[#0e0e0e] border border-white/10 hover:border-gold/60 flex flex-col items-center justify-center transition-all duration-300 group shadow-lg hover:shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:-translate-y-1 select-none"
+                  title={client.name}
+                >
+                  <div className="w-full h-16 sm:h-20 md:h-22 flex items-center justify-center p-2">
+                    <img
+                      src={client.logo}
+                      alt={client.name}
+                      className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <span className="text-[11px] sm:text-xs text-gray-300 group-hover:text-gold text-center font-sans font-medium line-clamp-1 mt-2 transition-colors">
+                    {client.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
+        </div>
+
+        <div className="mt-12 text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link
+            to="/clients"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold hover:text-white transition-colors group"
+          >
+            <span>Explore All 31 Verified Client Partners</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </section>
 
