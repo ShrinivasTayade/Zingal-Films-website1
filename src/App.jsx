@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import OurStoryPage from './pages/OurStoryPage';
 import ServicesPage from './pages/ServicesPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
 import OurWorkPage from './pages/OurWorkPage';
 import StudioPage from './pages/StudioPage';
 import ClientsPage from './pages/ClientsPage';
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/story" element={<OurStoryPage />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:serviceId" element={<ServiceDetailPage />} />
           <Route path="/work" element={<OurWorkPage />} />
           <Route path="/studio" element={<StudioPage />} />
           <Route path="/clients" element={<ClientsPage />} />

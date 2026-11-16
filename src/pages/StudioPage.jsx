@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Camera, Sliders, Volume2, Film, CheckCircle, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
+import SEO from '../components/SEO';
 import { equipmentList, studioFacilities } from '../data/studioData';
 
 export default function StudioPage() {
   return (
     <div className="bg-black min-h-screen text-gray-200 pt-28 pb-24">
+      <SEO
+        title="Studio Infrastructure & Cinema Equipment"
+        description="Explore Zingal's film infrastructure: Arri Alexa XT, Zeiss CP.2 primes, Sony FX6, DaVinci Resolve DI suites, and sound recording studios in Nagpur."
+        canonical="/studio"
+      />
       
       {/* 1. Header Hero */}
       <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-b border-white/5 overflow-hidden">

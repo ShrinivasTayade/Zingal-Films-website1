@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Film, Sparkles, CheckCircle2, ShieldCheck, Heart } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
+import SEO from '../components/SEO';
 import { companyData } from '../data/companyData';
 
 export default function OurStoryPage() {
   return (
     <div className="bg-black min-h-screen text-gray-200 pt-28 pb-24">
+      <SEO
+        title="Our Story, Heritage & Vision"
+        description="Learn about Zingal Films & Music India Pvt. Ltd. Founded with a vision to craft cinema that connects and stories that inspire across India."
+        canonical="/story"
+      />
       
       {/* 1. Hero Header */}
       <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-b border-white/5 overflow-hidden">

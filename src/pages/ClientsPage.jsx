@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Shield, Landmark } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
+import SEO from '../components/SEO';
 import { clientsData, clientCategories } from '../data/clientsData';
 
 export default function ClientsPage() {
@@ -14,6 +15,11 @@ export default function ClientsPage() {
 
   return (
     <div className="bg-black min-h-screen text-gray-200 pt-28 pb-24">
+      <SEO
+        title="Our Clientele | Government, Police & Enterprise Partners"
+        description="Verified client portfolio of Zingal Films: Government of Maharashtra, Police Authorities, Municipal Corporations, MAHAGENCO, and corporate enterprises."
+        canonical="/clients"
+      />
       
       {/* 1. Header Hero */}
       <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-b border-white/5 overflow-hidden">

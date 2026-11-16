@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Send, CheckCircle2, AlertCircle, Phone, Mail, MessageSquare, Info } from 'lucide-react';
 import { companyData } from '../data/companyData';
 
@@ -16,6 +17,8 @@ const serviceOptions = [
 ];
 
 export default function ContactForm() {
+  const location = useLocation();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,6 +26,20 @@ export default function ContactForm() {
     service: '',
     brief: '',
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const serviceParam = params.get('service');
+    if (serviceParam) {
+      const match = serviceOptions.find(opt => 
+        opt.toLowerCase().includes(serviceParam.toLowerCase()) || 
+        serviceParam.toLowerCase().includes(opt.toLowerCase())
+      );
+      if (match) {
+        setFormData(prev => ({ ...prev, service: match }));
+      }
+    }
+  }, [location.search]);
 
   const [errors, setErrors] = useState({});
   const [submittedData, setSubmittedData] = useState(null);

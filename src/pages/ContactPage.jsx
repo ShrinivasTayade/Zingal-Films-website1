@@ -1,11 +1,17 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock, MessageSquare, Shield, CheckCircle } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import { companyData } from '../data/companyData';
 
 export default function ContactPage() {
   return (
     <div className="bg-black min-h-screen text-gray-200 pt-28 pb-24">
+      <SEO
+        title="Contact Production Desk & Project Enquiries"
+        description="Connect with Zingal Films & Music India Pvt. Ltd. in Nagpur. Phone: +91 9503736430, Email: zingalfilmsmusicindia@gmail.com. Request project quotes for films, TVCs & audio."
+        canonical="/contact"
+      />
       
       {/* 1. Header Hero */}
       <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-b border-white/5 overflow-hidden">

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Eye, Filter, Sparkles, Film, Image as ImageIcon } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import ProjectModal from '../components/ProjectModal';
+import SEO from '../components/SEO';
 import { portfolioData, portfolioCategories } from '../data/portfolioData';
 import { stillsData } from '../data/stillsData';
 
@@ -18,6 +19,11 @@ export default function OurWorkPage() {
 
   return (
     <div className="bg-black min-h-screen text-gray-200 pt-28 pb-24">
+      <SEO
+        title="Production Portfolio, Posters & Film Stills"
+        description="Explore the cinematic portfolio of Zingal Films: Theatrical movie posters, behind-the-scenes set stills, and multimedia productions."
+        canonical="/work"
+      />
       
       {/* 1. Header Hero */}
       <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-b border-white/5 overflow-hidden">

@@ -19,6 +19,7 @@ import HeroVideo from '../components/HeroVideo';
 import SectionHeading from '../components/SectionHeading';
 import BehindTheScenesSlider from '../components/BehindTheScenesSlider';
 import ProjectModal from '../components/ProjectModal';
+import SEO from '../components/SEO';
 import { companyData } from '../data/companyData';
 import { portfolioData } from '../data/portfolioData';
 import { stillsData } from '../data/stillsData';
@@ -71,6 +72,11 @@ export default function HomePage() {
 
   return (
     <div className="relative bg-black min-h-screen text-gray-200">
+      <SEO
+        title="Zingal Films & Music India | Stories that Inspire. Cinema that Connects."
+        description="Premier film & music production company based in Nagpur, Maharashtra. Feature films, OTT series, corporate documentaries, television commercials, and post-production."
+        canonical="/"
+      />
       
       {/* 1. Main Hero: 100% Width Opening Logo Video */}
       <HeroVideo />
