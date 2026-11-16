@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, ArrowUp, Film } from 'lucide-react';
+import { Phone, Mail, MapPin, ArrowUp, Film, Sparkles } from 'lucide-react';
 import { companyData } from '../data/companyData';
 
 export default function Footer() {
@@ -9,39 +9,34 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#050505] border-t border-[#d4af37]/20 pt-16 pb-10 text-gray-400 overflow-hidden">
+    <footer className="relative bg-[#050505] border-t border-[#d4af37]/25 pt-16 pb-10 text-gray-400 overflow-hidden">
       {/* Decorative Gold Glow in Background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/50 to-transparent" />
-      <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-48 bg-[#d4af37]/5 blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent" />
+      <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-48 bg-[#d4af37]/8 blur-3xl pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Editorial Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-14 border-b border-white/5">
           
-          {/* Column 1: Brand & Tagline */}
+          {/* Column 1: Brand & Prominent Cropped Golden Logo */}
           <div className="lg:col-span-5 space-y-6">
-            <Link to="/" className="inline-flex items-center gap-4 group">
-              <div className="w-16 h-16 rounded-full p-1.5 bg-black/60 border border-gold/40 group-hover:border-gold transition-colors flex items-center justify-center">
+            <Link to="/" className="inline-block group py-1 focus:outline-none" aria-label="Zingal Films & Music Home">
+              <div className="relative">
                 <img 
-                  src="/assets/images/logo.png" 
-                  alt="Zingal Films & Music India" 
-                  className="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]"
+                  src="/assets/images/logo-cropped.png" 
+                  alt="Zingal Films & Music India Pvt. Ltd." 
+                  className="h-20 sm:h-24 md:h-28 w-auto max-w-[280px] sm:max-w-[320px] object-contain filter drop-shadow-[0_4px_18px_rgba(212,175,55,0.45)] group-hover:scale-105 group-hover:drop-shadow-[0_6px_26px_rgba(212,175,55,0.7)] transition-all duration-300"
                 />
               </div>
-              <div>
-                <h3 className="font-cinzel text-lg md:text-xl text-white font-bold tracking-widest uppercase">
-                  {companyData.name}
-                </h3>
-                <p className="text-xs text-gold font-sans tracking-widest uppercase mt-0.5">
-                  {companyData.tagline}
-                </p>
-              </div>
+              <p className="text-xs text-gold font-sans tracking-widest uppercase mt-3 font-semibold">
+                {companyData.tagline}
+              </p>
             </Link>
 
             <p className="text-sm text-gray-400 font-sans leading-relaxed max-w-md">
               A premier creative film production house and music label delivering visually engaging, 
-              technically masterful, and emotionally powerful cinema for global audiences.
+              technically masterful, and emotionally powerful cinema for global entertainment platforms.
             </p>
 
             <blockquote className="border-l-2 border-gold/50 pl-4 py-1 italic font-cormorant text-base text-gray-300">
@@ -108,7 +103,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-                <a href={companyData.socialLinks.phone} className="hover:text-gold transition-colors">
+                <a href={companyData.socialLinks.phone} className="hover:text-gold transition-colors font-medium">
                   {companyData.phone}
                 </a>
               </div>

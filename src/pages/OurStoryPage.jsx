@@ -29,16 +29,17 @@ export default function OurStoryPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
-            {/* Visual Frame */}
+            {/* Visual Frame - 1:1 on mobile as requested */}
             <div className="lg:col-span-5 relative">
-              <div className="relative rounded-lg overflow-hidden border border-gold/40 bg-[#080808] shadow-2xl">
+              <div className="relative rounded-lg overflow-hidden border border-gold/40 bg-[#080808] shadow-2xl aspect-square md:aspect-[4/5] flex items-center justify-center">
                 <img 
                   src="/assets/images/cinematic-clapperboard.jpg" 
                   alt="Zingal Films Production Slate" 
-                  className="w-full h-auto object-cover"
+                  className="w-full h-full aspect-square md:aspect-[4/5] object-cover"
                 />
-                <div className="p-4 bg-[#0a0a0a] border-t border-white/10 text-center">
-                  <p className="font-cormorant text-lg text-gold-light italic">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
+                <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/80 backdrop-blur-md rounded border border-white/10 text-center">
+                  <p className="font-cormorant text-base sm:text-lg text-gold-light italic">
                     "{companyData.quote}"
                   </p>
                 </div>

@@ -63,17 +63,17 @@ export default function HeroVideo() {
 
   return (
     <section 
-      className="relative w-full bg-black flex flex-col items-center justify-center overflow-hidden pt-16 sm:pt-20 pb-6 md:pb-12 md:min-h-[85vh] lg:h-screen select-none"
+      className="relative w-full bg-black flex flex-col items-center justify-center overflow-hidden pt-16 sm:pt-20 pb-4 md:pb-8 select-none"
       aria-label="Zingal Films & Music Opening Logo Hero"
     >
       {/* Background Ambient Lighting strictly matching the video's obsidian tone */}
       <div className="absolute inset-0 bg-[#000000] z-0 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06)_0%,rgba(0,0,0,0.98)_80%)] z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08)_0%,rgba(0,0,0,0.98)_85%)] z-0 pointer-events-none" />
 
-      {/* Main Video Presentation - STRICTLY NO CROPPING, NO STRETCHING, NO TEXT OVER LOGO */}
-      <div className="relative z-10 w-full flex items-center justify-center px-2 sm:px-6 md:px-12 my-auto">
+      {/* Main Video Presentation - 100% WIDTH VIEWPORT SPAN */}
+      <div className="relative z-10 w-full flex items-center justify-center px-0 my-auto">
         {!hasError ? (
-          <div className="relative w-full max-w-5xl aspect-[848/474] flex items-center justify-center overflow-hidden rounded">
+          <div className="relative w-full aspect-[848/474] max-h-[85vh] flex items-center justify-center overflow-hidden bg-black">
             <video
               ref={videoRef}
               src="/assets/video/zingal-logo-hero.mp4"
@@ -86,7 +86,7 @@ export default function HeroVideo() {
               onLoadedData={() => setIsVideoLoaded(true)}
               onError={() => setHasError(true)}
               className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)] transition-opacity duration-700"
-              style={{ backgroundColor: '#000000' }}
+              style={{ backgroundColor: '#000000', width: '100%' }}
               title="Zingal Films & Music India Logo Reveal"
             >
               <source src="/assets/video/zingal-logo-hero.mp4" type="video/mp4" />
@@ -114,12 +114,12 @@ export default function HeroVideo() {
       </div>
 
       {/* Hero Bottom Utility Bar: Controls + Scroll Prompt */}
-      <div className="relative z-20 w-full max-w-5xl px-4 sm:px-6 md:px-12 mt-3 md:mt-6 flex items-center justify-between">
+      <div className="relative z-20 w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-2 md:mt-4 flex items-center justify-between">
         
-        {/* Subtle Brand Tagline on Left (Hidden on very small mobile if space is tight) */}
-        <div className="hidden sm:flex items-center gap-2 text-[11px] uppercase tracking-widest text-gold/70 font-sans">
-          <span className="w-2 h-2 rounded-full bg-gold/60 animate-pulse" />
-          <span>Cinema in Motion</span>
+        {/* Subtle Brand Tagline on Left (Hidden on very small mobile) */}
+        <div className="hidden sm:flex items-center gap-2 text-[11px] uppercase tracking-widest text-gold/80 font-sans font-medium">
+          <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+          <span>Cinema in Motion &bull; Full-Width Showcase</span>
         </div>
 
         {/* Cinematic "Scroll to Explore" Center Indicator */}

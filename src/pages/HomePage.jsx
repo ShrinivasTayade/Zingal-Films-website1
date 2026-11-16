@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import HeroVideo from '../components/HeroVideo';
 import SectionHeading from '../components/SectionHeading';
+import BehindTheScenesSlider from '../components/BehindTheScenesSlider';
 import ProjectModal from '../components/ProjectModal';
 import { companyData } from '../data/companyData';
 import { portfolioData } from '../data/portfolioData';
@@ -29,30 +30,33 @@ export default function HomePage() {
   const [selectedStill, setSelectedStill] = useState(null);
 
   const featuredWorks = portfolioData.slice(0, 6);
-  const previewStills = stillsData.slice(0, 8);
-  const featuredClients = clientsData.slice(0, 16);
+
+  // Divide clients into 3 distinct, balanced rows for desktop presentation
+  const clientRow1 = clientsData.slice(0, 10);
+  const clientRow2 = clientsData.slice(10, 20);
+  const clientRow3 = clientsData.slice(20, 29);
 
   return (
     <div className="relative bg-black min-h-screen text-gray-200">
       
-      {/* 1. Main Hero: Opening Logo Video */}
+      {/* 1. Main Hero: 100% Width Opening Logo Video */}
       <HeroVideo />
 
       {/* 2. Brand Statement & Company Philosophy */}
       <section 
         id="company-statement" 
-        className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 overflow-hidden"
+        className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
-            {/* Visual Column with Slate Still from Profile */}
+            {/* Visual Column with Slate Still - STRICTLY 1:1 on Mobile */}
             <div className="lg:col-span-5 relative group">
-              <div className="relative rounded-lg overflow-hidden border border-gold/30 bg-obsidian-900 shadow-2xl">
+              <div className="relative rounded-lg overflow-hidden border border-gold/30 bg-obsidian-900 shadow-2xl aspect-square md:aspect-auto flex items-center justify-center">
                 <img 
                   src="/assets/images/cinematic-clapperboard.jpg" 
                   alt="Zingal Films Production Slate" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full aspect-square md:aspect-auto object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
                 <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/80 backdrop-blur-md rounded border border-white/10">
@@ -195,9 +199,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Core Services Overview */}
-      <section className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-black relative">
-        <div className="max-w-7xl mx-auto">
+      {/* 4. Core Services Overview with Blurred Gradient Abstract Background */}
+      <section className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-black relative overflow-hidden">
+        
+        {/* Abstract Blurred Gradient Mesh Elements */}
+        <div className="absolute top-1/4 -left-32 w-[480px] h-[480px] bg-gradient-to-tr from-[#d4af37]/25 via-[#b8902d]/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-10 -right-32 w-[580px] h-[580px] bg-gradient-to-bl from-[#dfba4f]/20 via-[#895e1c]/15 to-transparent rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[320px] bg-gradient-to-r from-transparent via-[#d4af37]/10 to-transparent rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute inset-0 bg-radial-vignette opacity-60 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
           
           <SectionHeading
             subtitle="Full Spectrum Production"
@@ -209,7 +220,7 @@ export default function HomePage() {
             {mainServices.slice(0, 6).map((service) => (
               <div 
                 key={service.id}
-                className="bg-[#0a0a0a] border border-white/10 hover:border-gold/40 rounded-lg p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:shadow-black/50 flex flex-col justify-between group"
+                className="bg-[#0a0a0a]/80 backdrop-blur-md border border-white/10 hover:border-gold/60 rounded-xl p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-black/70 flex flex-col justify-between group shadow-xl"
               >
                 <div>
                   <div className="w-12 h-12 rounded bg-black border border-gold/30 flex items-center justify-center text-gold mb-6 group-hover:border-gold group-hover:scale-105 transition-all">
@@ -248,7 +259,7 @@ export default function HomePage() {
           <div className="mt-12 text-center">
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 px-8 py-3.5 text-xs uppercase tracking-widest font-semibold border border-gold/40 text-gold hover:bg-gold hover:text-black transition-all rounded-sm"
+              className="inline-flex items-center gap-2 px-8 py-3.5 text-xs uppercase tracking-widest font-semibold border border-gold/40 text-gold hover:bg-gold hover:text-black transition-all rounded-sm backdrop-blur-sm"
             >
               <span>View All Services & Technical Expertise</span>
               <ArrowRight className="w-4 h-4" />
@@ -258,11 +269,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Production Stills / Behind-the-Scenes Reel */}
-      <section className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-[#050505]">
+      {/* 5. Production Stills / Behind-the-Scenes Image Slider */}
+      <section className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-[#050505] relative">
         <div className="max-w-7xl mx-auto">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
               <span className="text-xs uppercase tracking-super-wide text-gold font-semibold block mb-2">
                 On Location & Soundstages
@@ -273,7 +284,7 @@ export default function HomePage() {
             </div>
             
             <Link
-              to="/work#stills"
+              to="/work"
               className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold hover:text-white transition-colors group"
             >
               <span>Explore All 17 Production Stills</span>
@@ -281,30 +292,8 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Stills Masonry-like Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {previewStills.map((still) => (
-              <div
-                key={still.id}
-                onClick={() => setSelectedStill(still)}
-                className="group relative aspect-[4/3] rounded overflow-hidden bg-black border border-white/10 hover:border-gold/60 cursor-pointer shadow-lg"
-              >
-                <img 
-                  src={still.image} 
-                  alt={still.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
-                  <span className="text-[10px] uppercase tracking-widest text-gold font-semibold">
-                    {still.category}
-                  </span>
-                  <p className="font-cinzel text-xs text-white font-medium line-clamp-1">
-                    {still.title}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* Interactive Image Slider */}
+          <BehindTheScenesSlider onSelectStill={setSelectedStill} />
 
         </div>
       </section>
@@ -399,7 +388,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Verified Clientele Showcase */}
+      {/* 7. Verified Clientele Showcase - 3 ROWS & LARGER LOGOS ON DESKTOP */}
       <section className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-[#050505]">
         <div className="max-w-7xl mx-auto">
           
@@ -409,24 +398,32 @@ export default function HomePage() {
             description="Collaborating with government administrations, public sector undertakings, police authorities, municipal corporations, and enterprise leaders."
           />
 
-          {/* Client Logos Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 sm:gap-6 items-center">
-            {featuredClients.map((client, idx) => (
+          {/* 3 Distinct Rows with Larger Logos on Desktop */}
+          <div className="space-y-5 md:space-y-6">
+            {[clientRow1, clientRow2, clientRow3].map((row, rIdx) => (
               <div 
-                key={idx}
-                className="p-3 sm:p-4 rounded bg-[#0a0a0a] border border-white/10 hover:border-gold/40 flex flex-col items-center justify-center aspect-square transition-all duration-300 group shadow-md"
-                title={client.name}
+                key={rIdx}
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 xl:grid-cols-10 gap-3 sm:gap-4 items-stretch"
               >
-                <div className="w-full h-12 flex items-center justify-center p-1">
-                  <img 
-                    src={client.logo} 
-                    alt={client.name} 
-                    className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                  />
-                </div>
-                <span className="text-[9px] text-gray-400 group-hover:text-white text-center font-sans line-clamp-1 mt-2">
-                  {client.name}
-                </span>
+                {row.map((client, idx) => (
+                  <div 
+                    key={idx}
+                    className="p-3 sm:p-4 md:p-5 rounded-xl bg-[#0e0e0e] border border-white/10 hover:border-gold/60 flex flex-col items-center justify-center min-h-[125px] sm:min-h-[145px] md:min-h-[160px] lg:min-h-[170px] transition-all duration-300 group shadow-lg hover:shadow-gold/10 hover:-translate-y-1"
+                    title={client.name}
+                  >
+                    <div className="w-full h-14 sm:h-16 md:h-20 lg:h-22 flex items-center justify-center p-2">
+                      <img 
+                        src={client.logo} 
+                        alt={client.name} 
+                        className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                    <span className="text-[10px] md:text-[11px] text-gray-300 group-hover:text-gold text-center font-sans font-medium line-clamp-1 mt-2.5">
+                      {client.name}
+                    </span>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
