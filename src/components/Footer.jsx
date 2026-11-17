@@ -127,13 +127,25 @@ export default function Footer() {
         </div>
 
         {/* Bottom Utility Row */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <p className="font-sans">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500 border-t border-white/5">
+          <p className="font-sans text-center md:text-left">
             &copy; {new Date().getFullYear()} {companyData.name}. All rights reserved.
           </p>
 
+          <p className="font-sans text-center text-gray-400">
+            Designed &amp; Developed By{' '}
+            <a
+              href="http://curvemetrics.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold hover:text-white transition-colors font-medium underline underline-offset-4 decoration-gold/40 hover:decoration-gold"
+            >
+              Curve Metrics
+            </a>
+          </p>
+
           <div className="flex items-center gap-6">
-            <span className="text-[11px] tracking-widest uppercase text-gray-600">
+            <span className="text-[11px] tracking-widest uppercase text-gray-600 hidden sm:inline-block">
               Nagpur &bull; Maharashtra &bull; India
             </span>
 
